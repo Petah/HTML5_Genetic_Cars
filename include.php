@@ -3,8 +3,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', true);
 
 define('ROOT', __DIR__);
-define('SLUG', '/Users/Dave/OneDrive/Scripts/genetic-cars/public/');
-//define('SLUG', '/Users/petah_000/SkyDrive/Scripts/genetic-cars/public/');
+//define('SLUG', '/Users/Dave/OneDrive/Scripts/genetic-cars/public/');
+define('SLUG', '/Users/petah_000/SkyDrive/Scripts/genetic-cars/public/');
 
 function css($name, $media = null) {
 	$prefix = '';
