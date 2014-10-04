@@ -76,7 +76,6 @@ document.querySelector('[name=full-speed]').addEventListener('change', function(
 //Graphs
 var cw_graphTop = [];
 var cw_graphElite = [];
-var cw_graphAverage = [];
 
 function plot(data, color) {
     graphctx.strokeStyle = color;
@@ -89,20 +88,22 @@ function plot(data, color) {
 }
 
 function plot_graphs() {
+    var cw_graphAverage = [];
     for (var i = 0; i < carManager.groups.length; i++) {
         var carGroup = carManager.groups[i];
+        for (var j = 0; j < carGroup.scores.length; j++) {
 
-        cw_graphAverage.push(cw_average(carGroup.scores));
-        //cw_graphElite.push(cw_eliteaverage(carGroup.scores));
-        //cw_graphTop.push(carGroup.scores[0].v);
+            cw_graphAverage.push(cw_average(carGroup.scores[j]));
+            //cw_graphElite.push(cw_eliteaverage(carGroup.scores));
+            //cw_graphTop.push(carGroup.scores[0].v);
 
-        cw_clearGraphics();
+            cw_clearGraphics();
 
-        plot(cw_graphAverage, '#00f')
-        //plot(cw_graphElite, '#0f0')
-        //plot(cw_graphTop, '#f00')
+            plot(cw_graphAverage, '#00f')
+            //plot(cw_graphElite, '#0f0')
+            //plot(cw_graphTop, '#f00')
+        }
     }
-
 
     cw_listTopScores();
 }
