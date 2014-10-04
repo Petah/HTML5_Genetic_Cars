@@ -1,0 +1,68 @@
+@import 'variables';
+@import 'style';
+
+html,
+body {
+    height: 100%;
+    background: url('http://airpass.ro/wp-content/themes/airpass/images/clouds_bg2.jpg') 0 0 no-repeat;
+    background-size: 100% auto;
+}
+
+body {
+    position: relative;
+    overflow: hidden;
+}
+
+.overlay {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.sidebar {
+    flex: 0 0 auto;
+    width: 250px;
+    padding: $sidebar-padding;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.main {
+    flex: 0 0 auto;
+}
+
+.window {
+    flex: 1 1 auto;
+    width: 100%;
+}
+
+.main-nav {
+    flex: 0 0 auto;
+    width: $main-nav-width + ($main-nav-padding * 2);
+    background: rgba(0, 0, 0, 0.5);
+
+    .button {
+        //color: rgba(0, 0, 0 , 0);
+        color: #fff;
+        cursor: pointer;
+        display: block;
+        margin-top: $main-nav-padding;
+        padding: $main-nav-padding;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.95);
+        }
+
+        &.live {
+            //background: url('//cdn4.iconfinder.com/data/icons/REALVISTA/multimedia/png/64/videocam.png') 0 0 no-repeat;
+        }
+    }
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}

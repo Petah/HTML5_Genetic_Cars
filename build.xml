@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Generic Cars" default="css">
+    <target name="jsdev" description="Combine all JS files">
+        <exec level="info" logOutput="true" command="
+            cat
+                private/js/templates.js
+
+                private/js/ghost.js
+                private/js/path.js
+
+                private/js/car-manager.js
+                private/js/handler.js
+                private/js/ui.js
+
+                private/js/variables.js
+                private/js/car.js
+                private/js/generation.js
+                private/js/drawing.js
+                private/js/sim.js
+
+                private/js/process.js
+
+                private/js/graphs.js
+            > public/js/generic-cars.js
+        " />
+    </target>
+    <target name="css">
+        <exec level="info" logOutput="true" command="
+            scss private\scss\screen.scss public\css\screen.css
+        " />
+        <exec level="info" logOutput="true" command="
+            scss private\scss\bootstrap.scss public\css\bootstrap.css
+        " />
+    </target>
+</project>
