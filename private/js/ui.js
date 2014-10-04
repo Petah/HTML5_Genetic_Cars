@@ -92,7 +92,7 @@ function plot_graphs() {
         var data = [];
         for (var j = 0; j < carGroup.scores.length; j++) {
             for (var k = 0; k < carGroup.scores[j].length; k++) {
-                cw_graphAverage.push(cw_average(carGroup.scores[j]));
+                data.push(carGroup.scores[j][k].v);
             }
         }
         plot(cw_graphAverage, carGroup.color);
