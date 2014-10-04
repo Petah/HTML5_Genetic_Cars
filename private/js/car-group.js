@@ -3,7 +3,7 @@ var CarGroup = function(name, color) {
     this.color = color;
     this.cars = [];
     this.allCars = [];
-    this.scores = [];
+    this.scores = [[]];
     this.leaderPosition = {
         x: 0,
         y: 0
