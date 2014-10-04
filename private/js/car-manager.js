@@ -3,8 +3,8 @@ var CarManager = function() {
     this.groups = [
         new CarGroup('Alpha', '#00FF00'),
         new CarGroup('Bravo', '#0000FF'),
-        new CarGroup('Charlie', '#FF0000'),
-/*        new CarGroup('Delta', '#01FFFE'),
+/*        new CarGroup('Charlie', '#FF0000'),
+        new CarGroup('Delta', '#01FFFE'),
         new CarGroup('Echo', '#FFA6FE'),
         new CarGroup('Foxtrot', '#FFDB66'),
         new CarGroup('Golf', '#006401'),
