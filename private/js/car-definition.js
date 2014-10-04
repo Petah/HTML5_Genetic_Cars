@@ -36,14 +36,3 @@ CarDefinition.prototype.randomise = function() {
 
     return this;
 };
-
-CarDefinition.prototype.generate = function() {
-    var parent1 = cw_getParents();
-    var parent2 = parent1;
-    while (parent2 == parent1) {
-        parent2 = cw_getParents();
-    }
-    var newborn = cw_makeChild(this.scores[0].car_def, this.scores[1].car_def);
-    newborn = cw_mutate(newborn);
-    return newborn;
-};
