@@ -3,7 +3,7 @@ var CarManager = function() {
     this.groups = [
         new CarGroup('Alpha', '#00FF00'),
         new CarGroup('Bravo', '#0000FF'),
-/*        new CarGroup('Charlie', '#FF0000'),
+        new CarGroup('Charlie', '#FF0000'),
         new CarGroup('Delta', '#01FFFE'),
         new CarGroup('Echo', '#FFA6FE'),
         new CarGroup('Foxtrot', '#FFDB66'),
@@ -26,7 +26,7 @@ var CarManager = function() {
         new CarGroup('Whisky', '#85A900'),
         new CarGroup('X-Ray', '#FF0056'),
         new CarGroup('Yankee', '#A42400'),
-        new CarGroup('Zulu', '#00AE7E'),*/
+        new CarGroup('Zulu', '#00AE7E'),
     ];
     this.leaderPosition = {
         x: 0,
