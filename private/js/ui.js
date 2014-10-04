@@ -73,7 +73,7 @@ document.querySelector('[name=full-speed]').addEventListener('change', function(
     }
 });
 
-//Grpahs
+//Graphs
 var cw_graphTop = [];
 var cw_graphElite = [];
 var cw_graphAverage = [];
