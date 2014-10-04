@@ -64,7 +64,7 @@ cw_Car.prototype.kill = function(carGroup) {
     var position = this.maxPosition;
     var score = position + avgspeed;
     ghost_compare_to_replay(this.replay, ghost, score);
-    carGroup.scores.push({
+    carGroup.scores[carGroup.generationNumber].push({
         car_def: this.car_def,
         v: score,
         s: avgspeed,
