@@ -96,7 +96,7 @@ function plot_graphs() {
             }
         }
         for (var carNumber = 0; carNumber < data.length; carNumber++) {
-            plot(data[carNumber, carGroup.color);
+            plot(data[carNumber], carGroup.color);
         }
     }
 
