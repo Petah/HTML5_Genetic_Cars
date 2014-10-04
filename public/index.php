@@ -24,7 +24,6 @@
                             <input name="full-speed" type="checkbox"> Full Speed
                         </label>
                     </div>
-                    <input class="btn btn-default" type="button" value="Speed Up!" onclick="toggleDisplay()" />
                     <input class="btn btn-default" type="button" value="Stop" onclick="Handler.stop()" />
                     <div class="form-inline">
                         <label form="">Create new world with seed:</label>
