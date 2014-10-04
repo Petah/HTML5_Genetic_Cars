@@ -92,6 +92,9 @@ function plot_graphs() {
         var data = [];
         for (var generationNumber = 0; generationNumber < carGroup.scores.length; generationNumber++) {
             for (var carNumber = 0; carNumber < carGroup.scores[generationNumber].length; carNumber++) {
+                if (!data[carNumber]) {
+                    data[carNumber] = [];
+                }
                 data[carNumber].push(carGroup.scores[generationNumber][carNumber].v);
             }
         }
