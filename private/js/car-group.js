@@ -116,8 +116,8 @@ CarGroup.prototype.getChampions = function() {
     this.scores[this.generationNumber].sort(function(a, b) {
         return a.v > b.v ? -1 : 1;
     });
-    for (var k = 0; k < generationSize; k++) {
-        result.push(this.scores[this.generationNumber][k].i);
+    for (var i = 0; i < this.scores[this.generationNumber].length; i++) {
+        result.push(this.scores[this.generationNumber][i].i);
     }
     return result;
 };
