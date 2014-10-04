@@ -52,7 +52,7 @@ CarGroup.prototype.generate = function(i) {
     while (parent2 == parent1) {
         parent2 = cw_getParents();
     }
-    var newborn = cw_makeChild(this.scores[0].car_def, this.scores[1].car_def);
+    var newborn = cw_makeChild(this.scores[this.generationNumber][0].car_def, this.scores[this.generationNumber][1].car_def);
     newborn = cw_mutate(newborn);
     return newborn;
 };
@@ -74,10 +74,10 @@ CarGroup.prototype.nextGeneration = function() {
     carManager.topScores.push({
         group: this.name,
         i: this.generationNumber,
-        v: this.scores[0].v,
-        x: this.scores[0].x,
-        y: this.scores[0].y,
-        y2: this.scores[0].y2
+        v: this.scores[this.generationNumber][0].v,
+        x: this.scores[this.generationNumber][0].x,
+        y: this.scores[this.generationNumber][0].y,
+        y2: this.scores[this.generationNumber][0].y2
     });
     for (var k = 0; k < gen_champions; k++) {
         this.scores[k].car_def.is_elite = true;
@@ -97,9 +97,9 @@ CarGroup.prototype.nextGeneration = function() {
         newborn.index = k;
         newGeneration.push(newborn);
     }
-    this.scores = [];
     this.generation = newGeneration;
     this.generationNumber++;
+    this.scores[this.generationNumber] = [];
     this.materialise();
     cw_deadCars = 0;
 }
@@ -113,11 +113,11 @@ CarGroup.prototype.materialise = function() {
 
 CarGroup.prototype.getChampions = function() {
     var result = [];
-    this.scores.sort(function(a, b) {
+    this.scores[this.generationNumber].sort(function(a, b) {
         return a.v > b.v ? -1 : 1;
     });
     for (var k = 0; k < generationSize; k++) {
-        result.push(this.scores[k].i);
+        result.push(this.scores[this.generationNumber][k].i);
     }
     return result;
 };
