@@ -80,9 +80,9 @@ CarGroup.prototype.nextGeneration = function() {
         y2: this.scores[this.generationNumber][0].y2
     });
     for (var k = 0; k < gen_champions; k++) {
-        this.scores[k].car_def.is_elite = true;
-        this.scores[k].car_def.index = k;
-        newGeneration.push(this.scores[k].car_def);
+        this.scores[this.generationNumber][k].car_def.is_elite = true;
+        this.scores[this.generationNumber][k].car_def.index = k;
+        newGeneration.push(this.scores[this.generationNumber][k].car_def);
     }
     for (k = gen_champions; k < generationSize; k++) {
         var parent1 = cw_getParents();
@@ -90,8 +90,8 @@ CarGroup.prototype.nextGeneration = function() {
         while (parent2 == parent1) {
             parent2 = cw_getParents();
         }
-        newborn = cw_makeChild(this.scores[parent1].car_def,
-            this.scores[parent2].car_def);
+        newborn = cw_makeChild(this.scores[this.generationNumber][parent1].car_def,
+            this.scores[this.generationNumber][parent2].car_def);
         newborn = cw_mutate(newborn);
         newborn.is_elite = false;
         newborn.index = k;
