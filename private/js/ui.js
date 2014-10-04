@@ -99,7 +99,7 @@ function plot_graphs() {
 
             cw_clearGraphics();
 
-            plot(cw_graphAverage, '#00f')
+            plot(cw_graphAverage, carGroup.color)
             //plot(cw_graphElite, '#0f0')
             //plot(cw_graphTop, '#f00')
         }
