@@ -86,20 +86,14 @@ function plot(data, color) {
 }
 
 function plot_graphs() {
-    var cw_graphAverage = [];
-    var cw_graphTop = [];
-    var cw_graphElite = [];
     cw_clearGraphics();
     for (var i = 0; i < carManager.groups.length; i++) {
         var carGroup = carManager.groups[i];
+        var data = [];
         for (var j = 0; j < carGroup.scores.length; j++) {
-
-            cw_graphAverage.push(cw_average(carGroup.scores[j]));
-            //cw_graphElite.push(cw_eliteaverage(carGroup.scores));
-            //cw_graphTop.push(carGroup.scores[0].v);
-
-            //plot(cw_graphElite, '#0f0')
-            //plot(cw_graphTop, '#f00')
+            for (var k = 0; k < carGroup.scores[j].length; k++) {
+                cw_graphAverage.push(cw_average(carGroup.scores[j]));
+            }
         }
         plot(cw_graphAverage, carGroup.color);
     }
