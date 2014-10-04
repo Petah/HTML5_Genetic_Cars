@@ -90,12 +90,14 @@ function plot_graphs() {
     for (var i = 0; i < carManager.groups.length; i++) {
         var carGroup = carManager.groups[i];
         var data = [];
-        for (var j = 0; j < carGroup.scores.length; j++) {
-            for (var k = 0; k < carGroup.scores[j].length; k++) {
-                data.push(carGroup.scores[j][k].v);
+        for (var generationNumber = 0; generationNumber < carGroup.scores.length; generationNumber++) {
+            for (var carNumber = 0; carNumber < carGroup.scores[generationNumber].length; carNumber++) {
+                data[carNumber].push(carGroup.scores[generationNumber][carNumber].v);
             }
         }
-        plot(data, carGroup.color);
+        for (var carNumber = 0; carNumber < data.length; carNumber++) {
+            plot(data[carNumber, carGroup.color);
+        }
     }
 
     cw_listTopScores();
