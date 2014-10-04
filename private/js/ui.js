@@ -95,7 +95,7 @@ function plot_graphs() {
                 data.push(carGroup.scores[j][k].v);
             }
         }
-        plot(cw_graphAverage, carGroup.color);
+        plot(data, carGroup.color);
     }
 
     cw_listTopScores();
