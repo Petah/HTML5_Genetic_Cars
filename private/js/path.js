@@ -2,14 +2,14 @@ function cw_createFloor() {
     var last_tile = null;
     var tile_position = new b2Vec2(-5, 0);
     cw_floorTiles = new Array();
-    Math.seedrandom(floorseed);
+    var random = new RNG(floorseed);
     for (var k = 0; k < maxFloorTiles; k++) {
         if (!mutable_floor) {
             // keep old impossible tracks if not using mutable floors
-            last_tile = cw_createFloorTile(tile_position, (Math.random() * 3 - 1.5) * 1.5 * k / maxFloorTiles);
+            last_tile = cw_createFloorTile(tile_position, (random.uniform() * 3 - 1.5) * 1.5 * k / maxFloorTiles);
         } else {
             // if path is mutable over races, create smoother tracks
-            last_tile = cw_createFloorTile(tile_position, (Math.random() * 3 - 1.5) * 1.2 * k / maxFloorTiles);
+            last_tile = cw_createFloorTile(tile_position, (random.uniform() * 3 - 1.5) * 1.2 * k / maxFloorTiles);
         }
         cw_floorTiles.push(last_tile);
         last_fixture = last_tile.GetFixtureList();
@@ -35,7 +35,7 @@ function cw_createFloorTile(position, angle) {
     coords.push(new b2Vec2(groundPieceWidth, 0));
 
     var center = new b2Vec2(0, 0);
-
+    angle = Math.max(Math.min(angle, Math.PI / 2.5), -(Math.PI / 2.5));
     var newcoords = cw_rotateFloorTile(coords, center, angle);
 
     fix_def.shape.SetAsArray(newcoords);

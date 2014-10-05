@@ -7,15 +7,18 @@ UI.prototype.initialise = function() {
     this.miniMapMarkers = [];
     this.miniMapMarkersWrapper = document.getElementById('minimapholder');
 
-    var allCars = carManager.getAllCars();
-    for (var i = 0; i < allCars.length; i++) {
-        var healthBar = new HealthBar();
-        this.healthBarWrapper.appendChild(healthBar.wrapper);
-        this.healthBars.push(healthBar);
+    for (var i = 0; i < carManager.groups.length; i++) {
+        var carGroup = carManager.groups[i];
+        for (var j = 0; j < carGroup.allCars.length; j++) {
+            var car = carGroup.allCars[j];
+            var healthBar = new HealthBar();
+            this.healthBarWrapper.appendChild(healthBar.wrapper);
+            this.healthBars[i * 1000 + j] = healthBar;
 
-        var miniMapMarker = new MiniMapMarker();
-        this.miniMapMarkersWrapper.appendChild(miniMapMarker.marker);
-        this.miniMapMarkers.push(miniMapMarker);
+            var miniMapMarker = new MiniMapMarker();
+            this.miniMapMarkersWrapper.appendChild(miniMapMarker.marker);
+            this.miniMapMarkers[i * 1000 + j] = miniMapMarker;
+        }
     }
 };
 
@@ -25,15 +28,20 @@ UI.prototype.update = function() {
     document.getElementById("generation").innerHTML = "Generation " + gen_counter;
     document.getElementById("population").innerHTML = "Cars alive: " + allCars.length;
 
-    for (var i = 0; i < allCars.length; i++) {
-        this.healthBars[i].bar.style.width = (allCars[i].health * 100) + '%';
+    for (var i = 0; i < carManager.groups.length; i++) {
+        var carGroup = carManager.groups[i];
+        for (var j = 0; j < carGroup.allCars.length; j++) {
+            var car = carGroup.allCars[j];
+            this.healthBars[i * 1000 + j].bar.style.width = (car.health * 100) + '%';
+            this.healthBars[i * 1000 + j].bar.style.backgroundColor = 'rgb(' + carGroup.color[0] + ',' + carGroup.color[1] + ',' + carGroup.color[2] + ')';
 
-        var position = allCars[i].getPosition();
-        this.miniMapMarkers[i].marker.style.left = Math.round((position.x + 5) * minimapscale) + 'px';
-        if (allCars[i].alive) {
-            this.miniMapMarkers[i].marker.style.borderColor = 'black';
-        } else {
-            this.miniMapMarkers[i].marker.style.borderColor = 'red';
+            var position = car.getPosition();
+            this.miniMapMarkers[i * 1000 + j].marker.style.left = Math.round((position.x + 5) * minimapscale) + 'px';
+            if (car.alive) {
+                this.miniMapMarkers[i * 1000 + j].marker.style.borderColor = 'rgb(' + carGroup.color[0] + ',' + carGroup.color[1] + ',' + carGroup.color[2] + ')';
+            } else {
+                this.miniMapMarkers[i * 1000 + j].marker.style.borderColor = 'black';
+            }
         }
     }
 
@@ -75,8 +83,8 @@ document.querySelector('[name=full-speed]').addEventListener('change', function(
 
 //Graphs
 
-function plot(data, color) {
-    graphctx.strokeStyle = color;
+function plot(data, color, alpha) {
+    graphctx.strokeStyle = 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',' + alpha + ')';
     graphctx.beginPath();
     graphctx.moveTo(0, 0);
     for (var i = 0; i < data.length; i++) {
@@ -99,7 +107,7 @@ function plot_graphs() {
             }
         }
         for (var carNumber = 0; carNumber < data.length; carNumber++) {
-            plot(data[carNumber], carGroup.color);
+            plot(data[carNumber], carGroup.color, 0.7);
         }
     }
 

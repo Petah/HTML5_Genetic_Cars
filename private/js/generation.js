@@ -1,16 +1,16 @@
-function cw_getParents() {
-    var r = Math.random();
+function cw_getParents(random) {
+    var r = random.uniform();
     if (r == 0)
         return 0;
     return Math.floor(-Math.log(r) * generationSize) % generationSize;
 }
 
-function cw_makeChild(car_def1, car_def2) {
+function cw_makeChild(random, car_def1, car_def2) {
     var newCarDef = new Object();
-    swapPoint1 = Math.round(Math.random() * (nAttributes - 1));
+    swapPoint1 = Math.round(random.uniform() * (nAttributes - 1));
     swapPoint2 = swapPoint1;
     while (swapPoint2 == swapPoint1) {
-        swapPoint2 = Math.round(Math.random() * (nAttributes - 1));
+        swapPoint2 = Math.round(random.uniform() * (nAttributes - 1));
     }
     var parents = [car_def1, car_def2];
     var curparent = 0;
@@ -19,7 +19,7 @@ function cw_makeChild(car_def1, car_def2) {
     var variateWheelParents = parents[0].wheelCount == parents[1].wheelCount;
 
     if (!variateWheelParents) {
-        wheelParent = Math.floor(Math.random() * 2);
+        wheelParent = Math.floor(random.uniform() * 2);
     }
 
     newCarDef.wheelCount = parents[wheelParent].wheelCount;
@@ -78,64 +78,64 @@ function cw_makeChild(car_def1, car_def2) {
 }
 
 
-function cw_mutate1(old, min, range) {
+function cw_mutate1(random, old, min, range) {
     var span = range * mutation_range;
     var base = old - 0.5 * span;
     if (base < min)
         base = min;
     if (base > min + (range - span))
         base = min + (range - span);
-    return base + span * Math.random();
+    return base + span * random.uniform();
 }
 
-function cw_mutatev(car_def, n, xfact, yfact) {
-    if (Math.random() >= gen_mutation)
+function cw_mutatev(random, car_def, n, xfact, yfact) {
+    if (random.uniform() >= gen_mutation)
         return;
 
     var v = car_def.vertex_list[n];
     var x = 0;
     var y = 0;
     if (xfact != 0)
-        x = xfact * cw_mutate1(xfact * v.x, chassisMinAxis, chassisMaxAxis);
+        x = xfact * cw_mutate1(random, xfact * v.x, chassisMinAxis, chassisMaxAxis);
     if (yfact != 0)
-        y = yfact * cw_mutate1(yfact * v.y, chassisMinAxis, chassisMaxAxis);
+        y = yfact * cw_mutate1(random, yfact * v.y, chassisMinAxis, chassisMaxAxis);
     car_def.vertex_list.splice(n, 1, new b2Vec2(x, y));
 }
 
 
-function cw_mutate(car_def) {
+function cw_mutate(random, car_def) {
     for (var i = 0; i < car_def.wheelCount; i++) {
-        if (Math.random() < gen_mutation) {
-            car_def.wheel_radius[i] = cw_mutate1(car_def.wheel_radius[i], wheelMinRadius, wheelMaxRadius);
+        if (random.uniform() < gen_mutation) {
+            car_def.wheel_radius[i] = cw_mutate1(random, car_def.wheel_radius[i], wheelMinRadius, wheelMaxRadius);
         }
     }
 
     var wheel_m_rate = mutation_range < gen_mutation ? mutation_range : gen_mutation;
 
     for (var i = 0; i < car_def.wheelCount; i++) {
-        if (Math.random() < wheel_m_rate) {
-            car_def.wheel_vertex[i] = Math.floor(Math.random() * 8) % 8;
+        if (random.uniform() < wheel_m_rate) {
+            car_def.wheel_vertex[i] = Math.floor(random.uniform() * 8) % 8;
         }
     }
 
     for (var i = 0; i < car_def.wheelCount; i++) {
-        if (Math.random() < gen_mutation) {
-            car_def.wheel_density[i] = cw_mutate1(car_def.wheel_density[i], wheelMinDensity, wheelMaxDensity);
+        if (random.uniform() < gen_mutation) {
+            car_def.wheel_density[i] = cw_mutate1(random, car_def.wheel_density[i], wheelMinDensity, wheelMaxDensity);
         }
     }
 
-    if (Math.random() < gen_mutation) {
-        car_def.chassis_density = cw_mutate1(car_def.chassis_density, chassisMinDensity, chassisMaxDensity);
+    if (random.uniform() < gen_mutation) {
+        car_def.chassis_density = cw_mutate1(random, car_def.chassis_density, chassisMinDensity, chassisMaxDensity);
     }
 
-    cw_mutatev(car_def, 0, 1, 0);
-    cw_mutatev(car_def, 1, 1, 1);
-    cw_mutatev(car_def, 2, 0, 1);
-    cw_mutatev(car_def, 3, -1, 1);
-    cw_mutatev(car_def, 4, -1, 0);
-    cw_mutatev(car_def, 5, -1, -1);
-    cw_mutatev(car_def, 6, 0, -1);
-    cw_mutatev(car_def, 7, 1, -1);
+    cw_mutatev(random, car_def, 0, 1, 0);
+    cw_mutatev(random, car_def, 1, 1, 1);
+    cw_mutatev(random, car_def, 2, 0, 1);
+    cw_mutatev(random, car_def, 3, -1, 1);
+    cw_mutatev(random, car_def, 4, -1, 0);
+    cw_mutatev(random, car_def, 5, -1, -1);
+    cw_mutatev(random, car_def, 6, 0, -1);
+    cw_mutatev(random, car_def, 7, 1, -1);
 
     return car_def;
 }

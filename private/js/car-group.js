@@ -1,6 +1,7 @@
 var CarGroup = function(name, color) {
     this.name = name;
     this.color = color;
+    this.random = new RNG(name);
     this.cars = [];
     this.allCars = [];
     this.scores = [[]];
@@ -47,20 +48,20 @@ CarGroup.prototype.step = function() {
 }
 
 CarGroup.prototype.generate = function(i) {
-    var parent1 = cw_getParents();
+    var parent1 = cw_getParents(this.random);
     var parent2 = parent1;
     while (parent2 == parent1) {
-        parent2 = cw_getParents();
+        parent2 = cw_getParents(this.random);
     }
-    var newborn = cw_makeChild(this.scores[this.generationNumber][0].car_def, this.scores[this.generationNumber][1].car_def);
-    newborn = cw_mutate(newborn);
+    var newborn = cw_makeChild(this.random, this.scores[this.generationNumber][0].car_def, this.scores[this.generationNumber][1].car_def);
+    newborn = cw_mutate(this.random, newborn);
     return newborn;
 };
 
 CarGroup.prototype.generationZero = function() {
     for (var i = 0; i < generationSize; i++) {
         var car_def = new CarDefinition();
-        car_def.randomise();
+        car_def.randomise(this.random);
         car_def.index = i;
         this.generation.push(car_def);
     }
@@ -85,14 +86,14 @@ CarGroup.prototype.nextGeneration = function() {
         newGeneration.push(this.scores[this.generationNumber][k].car_def);
     }
     for (k = gen_champions; k < generationSize; k++) {
-        var parent1 = cw_getParents();
+        var parent1 = cw_getParents(this.random);
         var parent2 = parent1;
         while (parent2 == parent1) {
-            parent2 = cw_getParents();
+            parent2 = cw_getParents(this.random);
         }
-        newborn = cw_makeChild(this.scores[this.generationNumber][parent1].car_def,
+        newborn = cw_makeChild(this.random, this.scores[this.generationNumber][parent1].car_def,
             this.scores[this.generationNumber][parent2].car_def);
-        newborn = cw_mutate(newborn);
+        newborn = cw_mutate(this.random, newborn);
         newborn.is_elite = false;
         newborn.index = k;
         newGeneration.push(newborn);

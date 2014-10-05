@@ -34,7 +34,7 @@ var minimapcanvas = document.getElementById("minimap");
 var minimapctx = minimapcanvas.getContext("2d");
 var minimapscale = 3;
 
-var generationSize = 4;
+var generationSize = 6;
 var carManager = new CarManager();
 
 var gen_champions = 1;
@@ -53,7 +53,7 @@ var zoom = 70;
 
 var mutable_floor = false;
 
-var maxFloorTiles = 200;
+var maxFloorTiles = 250;
 var cw_floorTiles = [];
 var last_drawn_tile = 0;
 
@@ -83,6 +83,7 @@ var swapPoint2 = 0;
 var cw_ghostReplayInterval = null;
 
 var distanceMeter = document.getElementById("distancemeter");
+var floorseed = 'Map floor seed.'
 
 minimapcamera.width = 12 * minimapscale + "px";
 minimapcamera.height = 6 * minimapscale + "px";

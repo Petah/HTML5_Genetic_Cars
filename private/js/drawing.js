@@ -52,47 +52,73 @@ function cw_drawGhostReplay() {
 }
 
 
+function rgbToHsl(color){
+    var r = color[0],
+        g = color[1],
+        b = color[2];
+    r /= 255, g /= 255, b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+
+    if(max == min){
+        h = s = 0; // achromatic
+    }else{
+        var d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch(max){
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+
+    return [h, s, l];
+}
+
 function cw_drawCars() {
-    var cars = carManager.getCars();
-    for (var k = (cars.length - 1); k >= 0; k--) {
-        myCar = cars[k];
-        if (!myCar.alive) {
-            continue;
-        }
-        myCarPos = myCar.getPosition();
+    for (var j = 0; j < carManager.groups.length; j++) {
+        var carGroup = carManager.groups[j],
+            cars = carGroup.cars;
+        for (var k = (cars.length - 1); k >= 0; k--) {
+            myCar = cars[k];
+            if (!myCar.alive) {
+                continue;
+            }
+            myCarPos = myCar.getPosition();
 
-        if (myCarPos.x < (camera_x - 5)) {
-            // too far behind, don't draw
-            continue;
-        }
+            if ((myCarPos.x < (camera_x - 10)) || (myCarPos.x > (camera_x + 20))) {
+                continue;
+            }
 
-        ctx.strokeStyle = "#444";
-        ctx.lineWidth = 1 / zoom;
+            ctx.strokeStyle = "#444";
+            ctx.lineWidth = 1 / zoom;
 
-        for (var i = 0; i < myCar.wheels.length; i++) {
-            b = myCar.wheels[i];
+            for (var i = 0; i < myCar.wheels.length; i++) {
+                b = myCar.wheels[i];
+                for (f = b.GetFixtureList(); f; f = f.m_next) {
+                    var s = f.GetShape();
+                    var color = Math.round(255 - (255 * (f.m_density - wheelMinDensity)) / wheelMaxDensity).toString();
+                    var rgbcolor = "rgb(" + color + "," + color + "," + color + ")";
+                    cw_drawCircle(b, s.m_p, s.m_radius, b.m_sweep.a, rgbcolor);
+                }
+            }
+
+            var densitycolor = Math.round(100 - (70 * ((myCar.car_def.chassis_density - chassisMinDensity) / chassisMaxDensity))).toString() + "%";
+
+            ctx.strokeStyle = 'rgba(' + carGroup.color[0] + ',' + carGroup.color[1] + ',' + carGroup.color[2] + ',1)';
+            var hsl = rgbToHsl(carGroup.color);
+            ctx.fillStyle = 'hsl(' + Math.round(hsl[0] * 255) + ',' + Math.round(hsl[1] * 100) + '%,' + densitycolor + ')';
+
+            ctx.beginPath();
+            var b = myCar.chassis;
             for (f = b.GetFixtureList(); f; f = f.m_next) {
                 var s = f.GetShape();
-                var color = Math.round(255 - (255 * (f.m_density - wheelMinDensity)) / wheelMaxDensity).toString();
-                var rgbcolor = "rgb(" + color + "," + color + "," + color + ")";
-                cw_drawCircle(b, s.m_p, s.m_radius, b.m_sweep.a, rgbcolor);
+                cw_drawVirtualPoly(b, s.m_vertices, s.m_vertexCount);
             }
+            ctx.fill();
+            ctx.stroke();
         }
-
-        var densitycolor = Math.round(100 - (70 * ((myCar.car_def.chassis_density - chassisMinDensity) / chassisMaxDensity))).toString() + "%";
-
-        ctx.strokeStyle = "#c44";
-        //ctx.fillStyle = "#fdd";
-        ctx.fillStyle = "hsl(0,50%," + densitycolor + ")";
-
-        ctx.beginPath();
-        var b = myCar.chassis;
-        for (f = b.GetFixtureList(); f; f = f.m_next) {
-            var s = f.GetShape();
-            cw_drawVirtualPoly(b, s.m_vertices, s.m_vertexCount);
-        }
-        ctx.fill();
-        ctx.stroke();
     }
 }
 

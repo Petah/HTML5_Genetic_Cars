@@ -139,6 +139,7 @@
         <?= js('lib/bootstrap'); ?>
         <?= js('lib/seedrandom'); ?>
         <?= js('lib/box2d'); ?>
+        <?= js('lib/rng'); ?>
 
         <?= js('../../../private/js/templates.js'); ?>
 
